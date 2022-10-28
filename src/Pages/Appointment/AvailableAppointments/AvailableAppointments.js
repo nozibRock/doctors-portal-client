@@ -3,25 +3,33 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import AppointmentService from "../AppointmentService/AppointmentService";
 import BookingModal from "../BookingModal/BookingModal";
-import Loading from '../../Shared/Loading/Loading';
+import Loading from "../../Shared/Loading/Loading";
 
 const AvailableAppointments = ({ date }) => {
   // const [services, setServices] = useState([]);
   const [treatment, setTreatment] = useState(null);
   const formatDate = format(date, "PPPP");
   /* useEffect(() => {
-    fetch(`http://localhost:5000/available?date=${formatDate}`)
+    fetch(`https://murmuring-lake-47190.herokuapp.com/available?date=${formatDate}`)
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, [formatDate]); */
-  const { isLoading, error, data: services, refetch } = useQuery(["available", formatDate], () =>
-    fetch(`http://localhost:5000/available?date=${formatDate}`)
-    .then((res) => res.json())
+  const {
+    isLoading,
+    error,
+    data: services,
+    refetch,
+  } = useQuery(["available", formatDate], () =>
+    fetch(
+      `https://murmuring-lake-47190.herokuapp.com/available?date=${formatDate}`
+    ).then((res) => res.json())
   );
 
-     if (isLoading){ return <Loading></Loading> }
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
-     if (error) return "An error has occurred: " + error.message;
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div>
